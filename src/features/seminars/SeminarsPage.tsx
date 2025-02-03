@@ -10,29 +10,28 @@ export const SeminarsPage: React.FC = () => {
     const [seminarThatNeedToEdit, setSeminarThatNeedToEdit] = useState<Seminar | null>();
 
     const [isLoading, setIsLoading] = useState(false);
+    const [isPageLoading, setIsPageLoading] = useState(false);
 
     useEffect(() => {
-        setIsLoading(true);
+        setIsPageLoading(true);
         getSeminars().then(({ data: seminars }) => {
             setSeminars(seminars);
         }).catch(err => {
             alert('Упс, что-то пошло не так...');
         }).finally(() => {
-            setIsLoading(false);
+            setIsPageLoading(false);
         });
     }, [])
 
     const handleEdit = ({ seminar }: { seminar: Seminar }) => {
         setIsLoading(true);
         updateSeminar({ seminar }).then(({data}) => {
-            setSeminars(
-                seminars.map((i) => {
-                    if (i.id === data.id) {
-                        return data;
-                    }
-                    return i;
-                })
-            );
+            setSeminars(seminars.map(i => {
+                if (i.id === data.id) {
+                    return data;
+                }
+                return i;
+            }));
             setSeminarThatNeedToEdit(null);
         }).catch(err => {
             setSeminarThatNeedToEdit(null);
@@ -58,6 +57,7 @@ export const SeminarsPage: React.FC = () => {
     return <SeminarsPagePresentation
         seminars={seminars}
         isLoading={isLoading}
+        isPageLoading={isPageLoading}
         seminarThatNeedToEdit={seminarThatNeedToEdit}
         seminarThatNeedToDelete={seminarThatNeedToDelete}
         setSeminarThatNeedToDelete={setSeminarThatNeedToDelete}

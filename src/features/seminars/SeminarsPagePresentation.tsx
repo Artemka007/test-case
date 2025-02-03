@@ -7,6 +7,7 @@ import { Seminar } from "./core/models";
 export interface SeminarsPagePresentationOwnProps {
     seminars: Seminar[];
     isLoading: boolean;
+    isPageLoading: boolean;
     seminarThatNeedToEdit?: Seminar | null;
     seminarThatNeedToDelete?: Seminar | null;
     setSeminarThatNeedToEdit: (seminar: Seminar | null) => void;
@@ -18,6 +19,7 @@ export interface SeminarsPagePresentationOwnProps {
 export const SeminarsPagePresentation: React.FC<SeminarsPagePresentationOwnProps> = ({
     seminars,
     isLoading,
+    isPageLoading,
     seminarThatNeedToEdit,
     seminarThatNeedToDelete,
     setSeminarThatNeedToDelete,
@@ -25,7 +27,7 @@ export const SeminarsPagePresentation: React.FC<SeminarsPagePresentationOwnProps
     handleDelete,
     handleEdit
 }) => {
-    if (isLoading) {
+    if (isPageLoading) {
         return <>Loading...</>;
     }
 
